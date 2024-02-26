@@ -1,0 +1,33 @@
+
+default: &default
+  adapter: postgresql
+  port: 5432
+  encoding: unicode
+  username: <%= ENV["PG_USER_NAME"] %>
+  password: <%= ENV["PG_USER_PASSWORD"] %>
+  
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  
+development:
+  <<: *default
+  database: pearapple_development
+  port: 5433
+
+test:
+  <<: *default
+  database: pearapple_test
+  port: 5433
+
+
+production:
+  #<<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: pearapple_production
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  host: <%= ENV['POSTGRES_HOST'] %>
+  port: <%= ENV.fetch('POSTGRES_PORT') { 5432 } %>
